@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            margin-top: 5px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .add-more {
+            margin-top: 10px;
+            color: #007bff;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .add-more:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Resume Builder</h1>
+        <form method="POST" action="">
+            {% csrf_token %}
+
+            <!-- Personal Information -->
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" name="dob" required>
+
+            <label for="mobile">Mobile Number</label>
+            <input type="tel" id="mobile" name="mobile" required>
+
+            <label for="address">Address</label>
+            <textarea id="address" name="address" rows="3" required></textarea>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="skills">Skills</label>
+            <textarea id="skills" name="skills" rows="3" required></textarea>
+
+            <!-- Educational Details -->
+            <div id="education-fields">
+                <h3>Educational Details</h3>
+                <div class="education-entry">
+                    <label for="education-type">Type</label>
+                    <input type="text" name="education_type[]" required>
+
+                    <label for="board">Board</label>
+                    <input type="text" name="board[]" required>
+
+                    <label for="marks">Marks (Percentage/CGPA)</label>
+                    <select name="marks_type[]">
+                        <option value="Percentage">Percentage</option>
+                        <option value="CGPA">CGPA</option>
+                    </select>
+                    <input type="text" name="marks[]" required>
+                </div>
+            </div>
+            <span class="add-more" onclick="addEducationFields()">Add More Education</span>
+
+            <!-- Work Experience -->
+            <div id="work-experience-fields">
+                <h3>Work Experience</h3>
+                <div class="work-entry">
+                    <label for="company-name">Company Name</label>
+                    <input type="text" name="company_name[]">
+
+                    <label for="details">Details</label>
+                    <textarea name="details[]" rows="3"></textarea>
+                </div>
+            </div>
+            <span class="add-more" onclick="addWorkFields()">Add More Work Experience</span>
+
+            <!-- Certifications and Achievements -->
+            <div id="certifications-fields">
+                <h3>Certifications and Achievements</h3>
+                <div class="cert-entry">
+                    <label for="certification">Description</label>
+                    <textarea name="certification[]" rows="3"></textarea>
+                </div>
+            </div>
+            <span class="add-more" onclick="addCertFields()">Add More Certifications</span>
+
+            <button type="submit">Generate Resume</button>
+        </form>
+    </div>
+
+    <script>
+        function addEducationFields() {
+            const container = document.getElementById('education-fields');
+            const entry = document.createElement('div');
+            entry.classList.add('education-entry');
+            entry.innerHTML = `
+                <label for="education-type">Type</label>
+                <input type="text" name="education_type[]" required>
+
+                <label for="board">Board</label>
+                <input type="text" name="board[]" required>
+
+                <label for="marks">Marks (Percentage/CGPA)</label>
+                <select name="marks_type[]">
+                    <option value="Percentage">Percentage</option>
+                    <option value="CGPA">CGPA</option>
+                </select>
+                <input type="text" name="marks[]" required>
+            `;
+            container.appendChild(entry);
+        }
+
+        function addWorkFields() {
+            const container = document.getElementById('work-experience-fields');
+            const entry = document.createElement('div');
+            entry.classList.add('work-entry');
+            entry.innerHTML = `
+                <label for="company-name">Company Name</label>
+                <input type="text" name="company_name[]">
+
+                <label for="details">Details</label>
+                <textarea name="details[]" rows="3"></textarea>
+            `;
+            container.appendChild(entry);
+        }
+
+        function addCertFields() {
+            const container = document.getElementById('certifications-fields');
+            const entry = document.createElement('div');
+            entry.classList.add('cert-entry');
+            entry.innerHTML = `
+                <label for="certification">Description</label>
+                <textarea name="certification[]" rows="3"></textarea>
+            `;
+            container.appendChild(entry);
+        }
+    </script>
+</body>
+</html>
