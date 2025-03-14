@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import ResumeForm
 
+
 def home(request):
     if request.method == 'POST':
         form = ResumeForm(request.POST)
